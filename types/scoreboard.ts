@@ -1,0 +1,1 @@
+export type Scoreboard = Record<string, number>

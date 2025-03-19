@@ -1,0 +1,20 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100dvw;
+    height: 100dvh;
+    background: linear-gradient(154deg, color.$bg-primary-color 0%, color.$bg-secondary-color 100%); 
+}
+
+.required {
+    color: color.$secondary-color;
+}
+
+.error {
+    color: color.$secondary-color;
+    border-color: color.$secondary-color;
+}
