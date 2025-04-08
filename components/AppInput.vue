@@ -3,6 +3,7 @@ const props = defineProps<{
     value?: string,
     placeholder?: string
     hasError?: boolean
+    maxlength?: number
 }>()
 
 const emits = defineEmits<{
@@ -17,7 +18,7 @@ function onBlur() {
 </script>
 
 <template>
-    <input v-model="inputValue" :placeholder="placeholder" class="input" @blur="onBlur"/>
+    <input v-model="inputValue" :placeholder="placeholder" :maxlength="maxlength" class="input" @blur="onBlur"/>
 </template>
 
 <style lang="scss" scoped>

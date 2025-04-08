@@ -27,6 +27,8 @@ onUnmounted(() => {
 
     padding: 1rem;
 
+    overflow: auto;
+
     .content-title {
         padding: 2rem 0;
         text-align: center;

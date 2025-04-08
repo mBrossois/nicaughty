@@ -1,4 +1,5 @@
 import type * as Party from "partykit/server";
+import { characters } from "~/types/characters";
 import type { Connections } from "~/types/connections";
 
 export default class Server implements Party.Server {
@@ -43,8 +44,8 @@ export default class Server implements Party.Server {
       return;
     }
 
-    conn.send(JSON.stringify({messageType: 'set-id', value: conn.id}))
-    connections.push({isHost: connections.length === 0, id: conn.id})
+    conn.send(JSON.stringify({messageType: 'set-id', value: {id: conn.id,  character: characters[connections.length]}}))
+    connections.push({isHost: connections.length === 0, id: conn.id, character: characters[connections.length]})
     this.room.storage.put('connections', connections)
     this.room.broadcast(
       JSON.stringify({messageType: 'connections', connections})

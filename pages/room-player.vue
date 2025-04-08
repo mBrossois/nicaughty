@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AppCharactar from '~/components/AppCharactar.vue'
 import { usePartykitStore } from '~/store/partykit'
 import { useUsersStore } from '~/store/users'
 
@@ -10,7 +11,7 @@ function updatePlayerName(name?: string) {
 }
 
 const usersStore = useUsersStore()
-const { getConnections, getUserId } = storeToRefs(usersStore)
+const { getConnections, getUserId, getCharacter } = storeToRefs(usersStore)
 
 const isConnectedToRoom = computed(() => {
     const playerConnected = getConnections.value.find(connection => connection.id === getUserId.value)
@@ -40,7 +41,8 @@ onUnmounted(() => {
     <div>
         <div v-if="isConnectedToRoom" class="player_name">
             <AppText component="h2">Name<span class="required">*</span></AppText>
-            <AppInput placeholder="Fill player name in" @blur="updatePlayerName"/>
+            <AppInput placeholder="Fill player name in" :maxlength="24" @blur="updatePlayerName"/>
+            <AppCharactar v-if="getCharacter" :character="getCharacter" />
         </div>
         <div v-else>
             <AppText component="h2">You are not connected to any rooms</AppText>

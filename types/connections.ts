@@ -1,4 +1,6 @@
-export type Connections = Array<{isHost: boolean, id: string, name?: string}>
+import type { Characters } from "~/types/characters"
+
+export type Connections = Array<{isHost: boolean, id: string, name?: string, character?: Characters}>
 
 export type Room = {
     isConnected: boolean,

@@ -1,16 +1,22 @@
+import type { Characters } from "~/types/characters"
 import type { Connections, List } from "~/types/connections"
 
 export const useUsersStore = defineStore('users', () => {
-const userId = ref()
-const getUserId = computed(() => userId.value)
-function setUserId(id?: string) {
-    userId.value = id
+const user: Ref<{userId?: string, character?: Characters}> = ref({})
+const getUserId = computed(() => user.value.userId)
+const getCharacter = computed(() => user.value.character)
+function setUser(id: string, character: Characters) {
+    user.value.userId = id
+    user.value.character = character
 }
 
 const connections: Ref<Connections> = ref([])
 const getConnections = computed(() => connections.value)
 function setConnections(value: Connections) {
     connections.value = value
+}
+function emptyConnections() {
+    connections.value = []
 }
 
 const nicities: Ref<List> = ref({})
@@ -27,12 +33,13 @@ function setNaughties(value: List) {
 return { 
     getConnections, 
     setConnections, 
+    emptyConnections,
     getNicities, 
     setNicities,
     getNaughties,
     setNaughties,
     getUserId,
-    setUserId
+    setUser,
+    getCharacter
 }
-
 })

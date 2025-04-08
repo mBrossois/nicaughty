@@ -27,7 +27,6 @@ function updateRoomName(name?: string) {
     partykitStore.connect(name || '')
 }
 
-
 const usersStore = useUsersStore()
 const { getConnections } = storeToRefs(usersStore)
 function removePlayer(id: string) {
@@ -57,6 +56,7 @@ watch(getParty, () => {
 onUnmounted(() => {
     if(getParty.value) {
         partykitStore.disconnect()
+        usersStore.emptyConnections()
     }
 })
 </script>
@@ -71,15 +71,9 @@ onUnmounted(() => {
 
         <div class="players">
             <AppText component="h2">Players {{ getConnections.length }}/{{ 8 }}</AppText>
-            <div class="players_grid">
-                <div v-for="connection in getConnections" :key="connection.id" class="player">
-                    <div class="player_img"></div>
-                    <div class="text">
-                        <AppText component="p">Player:</AppText>
-                        <AppText component="p">{{ connection.name || 'unknown'}}</AppText>
-                    </div>
-                    <AppButton class="btn" variant="primary" color="primary" @click="removePlayer(connection.id)">X</AppButton>
-                </div>
+
+            <div v-for="connection in getConnections" :key="connection.id" class="players_grid">
+                <CharacterCard class="character" :name="connection.name ?? 'Unknown'" :character="connection.character!" @remove="removePlayer(connection.id)" />
             </div>
         </div>
     </div>
@@ -103,22 +97,33 @@ onUnmounted(() => {
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        padding: 1rem 0;
-
-        .player {
-            background-color: color.$secondary_color;
-            color: white;
-            padding: 1rem;
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-
-            .player_img {
-                width: 100px;
-                height: 100px;
+        
+        & > .character {
+            &:nth-child(odd) {
+                animation: animate-left 300ms ease-out;
+            }
+            &:nth-child(even) {
+                animation: animate-right 300ms ease-out;
             }
         }
     }
-   
+}
+
+@keyframes animate-left {
+    from {
+        transform: translateX(-105vw);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes animate-right {
+    from {
+        transform: translateX(105vw);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 </style>

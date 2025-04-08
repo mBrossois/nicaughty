@@ -42,7 +42,8 @@ watch(getParty, () => {
                     partykitStore.disconnect()
                     return;
                 case 'set-id': 
-                    usersStore.setUserId(result.value)
+                console.log('result', result.value)
+                    usersStore.setUser(result.value.id, result.value.character)
                     return;
                 case 'connections': 
                     usersStore.setConnections(result.connections)
